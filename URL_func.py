@@ -40,12 +40,12 @@ class file():
 
     def clipboard(self, string):
 
-        copy = input("Desea copiarlo al portapapeles? [y/n]: ")
+        copy = input("\nDesea copiarlo al portapapeles? [y/n]: ")
         
         if copy == "y":
 
             clip.copy(string)
-            print("Copiado al portapapeles")
+            print("\nCopiado al portapapeles\n")
 
 class functions():
 
@@ -64,29 +64,43 @@ class functions():
 
         name = input("Ingrese el nombre del archivo: ")
 
-        scale_u = input("Si desea modificar la escala, ingrese el valor\n"\
+        scale_u = input("\nSi desea modificar la escala, ingrese el valor\n"\
                     "~ 1(s) = 1.3(cm) or 0.51(in)\n"\
                     "~ No ingrese nada mas que valores numericos\n"\
                     "~ Si desea usar la escala predeterminada(8), presione 'Enter'\n\n"\
                     "Escala (max. 8): ")
 
-        scale = int(scale_u) if scale_u != "" else 8
-
-        save  = input("Desea guardarlo como:\n"\
+        save  = input("\nDesea guardarlo como:\n"\
                     "1. 'png'\n"\
                     "2. 'svg'\n"\
                     "3. Ambas\n\n"\
                     "Opcion: ")
 
-        validate = [name != "", scale in list(range(0, 9)), int(save) in list(range(0, 4))]
+        validate = [name != "", int(scale_u) in list(range(1, 9)), int(save) in list(range(1, 4))]
 
         if all(validate):
+
+            scale = int(scale_u) if scale_u != "" else 8
 
             return name, scale, save
         
         else:
 
-            print("Parametros incorrectos, ingreselos de nuevo")
+            print("\nParametros incorrectos, ingreselos de nuevo\n")
+
+            if validate[0] != True:
+
+                print("~ El nombre del archivo no puede estar en blanco")
+            
+            if validate[1] != True:
+
+                print("~ La escala debe entre min.1 - max.8 y\n"\
+                    "  no debe ingresar ningun simbolo o caracter alfabetico")
+
+            if validate[2] != True:
+
+                print("~ Ingrese solo el numero de la opcion de guardado que desea\n")
+
             self.qr_input()
 
     def qr_creator(self, name, scale, save):
@@ -94,7 +108,7 @@ class functions():
         qr = pyqr.create(self.link)
         suffix = ".png" if save == "1" else ".svg" if save == "2" else "(.png)/(.svg)"
         qr.show(wait = 5, scale = scale)
-        action = input(f"Nombre: {name}{suffix}\n"+\
+        action = input(f"\nNombre: {name}{suffix}\n"+\
                         f"Tamaño:{qr.get_png_size(scale=scale)}kb\n\n"+\
                         "Esta de acuerdo? [y/n]: ")
         
@@ -131,7 +145,7 @@ class app():
                     "3. Salir\n\n"\
                     "Opcion: ")
 
-        link = input("Ingrese el URL: ")
+        link = input("\nIngrese el URL: ")
 
         func = functions(link)
         self.clear_screen()
@@ -148,7 +162,7 @@ class app():
             name, scale, save = func.qr_input()
             path = func.qr_creator(name, scale, save)
             self.file.move(path)
-            print("Codigo QR creado con exito")
+            print("\nCodigo QR creado con exito\n")
             self.clear_screen(True)
             self.exec()
 

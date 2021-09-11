@@ -135,7 +135,6 @@ class app():
     def __init__(self):
 
         self.file = file()
-        self.exec()
     
     def exec(self):
 
@@ -145,7 +144,7 @@ class app():
                     "3. Salir\n\n"\
                     "Opcion: ")
 
-        link = input("\nIngrese el URL: ") if choice != "3" else ""
+        link = input("\nIngrese el URL: ") if choice in ["1", "2"] else ""
 
         func = functions(link)
         self.clear_screen()
@@ -170,6 +169,12 @@ class app():
             
             self.clear_screen()
             sys.exit()
+        
+        else:
+
+            print("Ingrese su opcion segun los parametros establecidos")
+            self.clear_screen(True)
+            self.exec()
     
     def clear_screen(self, wait = False):
 

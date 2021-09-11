@@ -145,7 +145,7 @@ class app():
                     "3. Salir\n\n"\
                     "Opcion: ")
 
-        link = input("\nIngrese el URL: ")
+        link = input("\nIngrese el URL: ") if choice != "3" else ""
 
         func = functions(link)
         self.clear_screen()
